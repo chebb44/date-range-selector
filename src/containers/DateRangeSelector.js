@@ -14,7 +14,7 @@ export const DateRangeSelector = () => {
     console.log('shift right')
   }
   return (
-    <div className="relative">
+    <div className="">
       <CollapsedRangeSelector
         toggleIsSelectorOpen={toggleIsSelectorOpen}
         shiftLeftCallback={shiftLeftCallback}

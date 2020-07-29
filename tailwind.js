@@ -189,6 +189,7 @@ module.exports = {
       '8': '8px',
     },
     boxShadow: {
+      custom: '0px 0px 8px 2px rgba(50, 50, 50, 0.57)',
       xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
       default: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',

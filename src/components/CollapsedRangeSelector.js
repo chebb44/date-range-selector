@@ -7,7 +7,7 @@ export const CollapsedRangeSelector = ({toggleIsSelectorOpen, shiftLeftCallback,
     <div className="border-blue-400">
       <span className="" onClick={toggleIsSelectorOpen}>
         <i className="fa fa-calendar text-gray-300" aria-hidden="true"/>
-        <span className="text-sm p-2"> Today, June 2020 </span>
+        <span className="text-xs font-bold p-2"> Today, June 21 </span>
       </span>
       <span className="">
         <img className="inline p-2" src={arrowLeft} alt="left" onClick={shiftLeftCallback}/>
