@@ -518,6 +518,7 @@ module.exports = {
       'span-4': 'span 4 / span 4',
       'span-5': 'span 5 / span 5',
       'span-6': 'span 6 / span 6',
+      'span-7': 'span 7 / span 7',
     },
     gridRowStart: {
       auto: 'auto',

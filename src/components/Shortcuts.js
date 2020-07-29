@@ -8,7 +8,7 @@ export const Shortcuts = () => {
     console.log('period', period);
   }, []);
   return (
-    <div className="w-1/5 flex flex-col justify-between items-start p-6 border-l">
+    <div className="w-1/5 flex flex-grow-0 flex-col justify-between items-start pl-6 pt-2 pb-2 border-l h-full">
       {
         buttons.map(period => {
           return <ShortcutItem
