@@ -7,7 +7,8 @@ import {END_CALENDAR, START_CALENDAR} from "../constants";
 export const OpenRangeSelector = ({rangeState, updateRangeState}) => {
 
   return (
-    <div className="open-range-selector absolute shadow-custom bg-white rounded z-10 p-4 pt-0 flex justify-between items-start">
+    <div
+      className="open-range-selector absolute shadow-custom bg-white rounded z-10 flex justify-between items-start">
       <Calendar
         rangeState={rangeState}
         updateRangeState={updateRangeState}
@@ -18,7 +19,9 @@ export const OpenRangeSelector = ({rangeState, updateRangeState}) => {
         updateRangeState={updateRangeState}
         type={END_CALENDAR}
       />
-      <Shortcuts/>
+      <Shortcuts
+        rangeState={rangeState}
+        updateRangeState={updateRangeState}/>
     </div>
   );
 };

@@ -2,10 +2,10 @@ import React from 'react';
 
 export const ShortcutItem = ({period, clickHandler}) => {
   return (
-    <button
-      onClick={clickHandler(period)}
+    <span className="font-bold text-xs p-1 m-1 cursor-pointer"
+      onClick={() => clickHandler(period)}
     >
       {period}
-    </button>
+    </span>
   );
 };
