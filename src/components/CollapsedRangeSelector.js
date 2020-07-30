@@ -1,20 +1,24 @@
 import React from 'react';
 import arrowLeft from '../assets/ic_angle-left.svg';
 import arrowRight from '../assets/ic_angle-right.svg';
-import {getNowDateWithoutTime} from "../utils/dateUtils";
+import {getFirstMonthDay, getNowDateWithoutTime, getSiblingMonth} from "../utils/dateUtils";
+import {FIRST_VALID_DATE, SHIFT_LEFT, SHIFT_RIGHT} from "../constants";
 
 
 export const CollapsedRangeSelector = ({toggleIsSelectorOpen, rangeState: {startDate, endDate}, updateRangeState}) => {
-  const shiftRangeCallback = (shift) => {
-    const newStartDate = new Date(startDate.getTime());
-    newStartDate.setDate(startDate.getDate() + shift);
-    const newEndDate = new Date(endDate.getTime())
-    newEndDate.setDate(endDate.getDate() + shift);
-    updateRangeState({startDate: newStartDate, startPeriod: newStartDate, endDate: newEndDate, endPeriod: newEndDate});
+  const shiftRangeCallback = (direction) => {
+    let {startDate: newStartDate, endDate: newEndDate} = getSiblingMonth(endDate, direction);
+    if (newEndDate.valueOf() > getNowDateWithoutTime().valueOf()) newEndDate = getNowDateWithoutTime();
+    if (newStartDate.valueOf() < FIRST_VALID_DATE.valueOf()) newStartDate = FIRST_VALID_DATE;
+    updateRangeState({
+      startDate: newStartDate,
+      startPeriod: getFirstMonthDay(newStartDate),
+      endDate: newEndDate,
+      endPeriod: getFirstMonthDay(newEndDate)
+    });
   }
   const todayDate = getNowDateWithoutTime();
   const isToday = todayDate.valueOf() === startDate.valueOf() && todayDate.valueOf() === endDate.valueOf();
-  const shiftStep = 1;
   return (
     <div className="border-blue-400">
       <span className="cursor-pointer" onClick={toggleIsSelectorOpen}>
@@ -41,9 +45,9 @@ export const CollapsedRangeSelector = ({toggleIsSelectorOpen, rangeState: {start
       </span>
       <span>
           <img className="inline p-2 cursor-pointer" src={arrowLeft} alt="left"
-               onClick={() => shiftRangeCallback(-shiftStep)}/>
+               onClick={() => shiftRangeCallback(SHIFT_LEFT)}/>
           <img className="inline p-2 cursor-pointer" src={arrowRight} alt="right"
-               onClick={() => shiftRangeCallback(shiftStep)}/>
+               onClick={() => shiftRangeCallback(SHIFT_RIGHT)}/>
       </span>
     </div>
   );

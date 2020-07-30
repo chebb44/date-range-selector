@@ -1,22 +1,24 @@
 import React, {useCallback, useState} from 'react';
 import {CollapsedRangeSelector} from "../components/CollapsedRangeSelector";
 import {OpenRangeSelector} from "../components/OpenRangeSelector";
-import {getNowDateWithoutTime} from "../utils/dateUtils";
+import {getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
 import {FIRST_VALID_DATE} from "../constants";
 
 export const DateRangeSelector = () => {
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const defaultStartDate = getNowDateWithoutTime();
+  defaultStartDate.setDate(1);
   const [rangeState, setRangeState] = useState({
-    startPeriod: getNowDateWithoutTime(),
+    startPeriod: defaultStartDate,
     endPeriod: getNowDateWithoutTime(),
-    startDate: getNowDateWithoutTime(),
+    startDate: defaultStartDate,
     endDate: getNowDateWithoutTime(),
   });
 
   const validateRangeState = (state) => {
     const today = getNowDateWithoutTime();
     return state.startDate.valueOf() >= FIRST_VALID_DATE.valueOf() &&
-      state.startPeriod.valueOf() >= FIRST_VALID_DATE.valueOf() &&
+      state.startPeriod.valueOf() >= getFirstMonthDay(FIRST_VALID_DATE).valueOf() &&
       state.endPeriod.valueOf() >= FIRST_VALID_DATE.valueOf() &&
       state.endDate.valueOf() >= FIRST_VALID_DATE.valueOf() &&
       state.startPeriod.valueOf() <= today.valueOf() &&

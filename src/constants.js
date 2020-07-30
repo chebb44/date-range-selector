@@ -16,3 +16,6 @@ export const FIRST_VALID_DATE = new Date(2017, 3, 4);
 
 export const SINGLE_SHIFT = 1;
 export const DOUBLE_SHIFT = 4;
+
+export const SHIFT_LEFT = 'SHIFT_LEFT';
+export const SHIFT_RIGHT = 'SHIFT_RIGHT';

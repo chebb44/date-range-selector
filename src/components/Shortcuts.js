@@ -41,7 +41,7 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
       }
       case LAST_7_DAYS: {
         const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(newEndDate.getDate() - 7);
+        newStartDate.setDate(newEndDate.getDate() - 6);
         updateRangeState({
           startDate: newStartDate,
           startPeriod: newStartDate,
