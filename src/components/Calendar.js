@@ -25,6 +25,7 @@ export const Calendar = ({rangeState: {startDate, endDate, startPeriod, endPerio
         <MonthSwitcher
           currentPeriod={currentPeriod}
           changePeriod={changePeriod}
+          calendarType={calendarType}
         />
       </div>
       <div className="grid grid-cols-7 grid-rows-6">

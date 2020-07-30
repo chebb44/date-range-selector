@@ -9,7 +9,7 @@ export const CalendarCell = ({activeDay, date = null, clickHandler = null, text,
       date.valueOf() <= endDate.valueOf() :
       date.valueOf() >= startDate.valueOf();
   }
-  const cellClasses = classNames("h-4 w-4 flex justify-center items-center p-4",
+  const cellClasses = classNames("h-4 w-4 w-full flex justify-center items-center p-4",
     {"cursor-pointer": date},
     {"bg-orange-400": date && date.valueOf() === activeDay.valueOf()},
     {

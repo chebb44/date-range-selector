@@ -11,7 +11,7 @@ import {
   YESTERDAY
 } from "../constants";
 import {ShortcutItem} from "./ShortcutItem";
-import {getNowDateWithoutTime} from "../utils/dateUtils";
+import {getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
 
 export const Shortcuts = ({rangeState, updateRangeState}) => {
   const buttons = [TODAY, YESTERDAY, LAST_7_DAYS, LAST_30_DAYS, THIS_MONTH, LAST_MONTH, THIS_YEAR, LIFETIME];
@@ -24,7 +24,7 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
           startDate: newEndDate,
           startPeriod: newEndDate,
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -33,9 +33,9 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(newEndDate.getDate() - 1);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newStartDate,
-          endPeriod: newStartDate
+          endPeriod: getFirstMonthDay(newStartDate)
         });
         break;
       }
@@ -44,20 +44,20 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(newEndDate.getDate() - 6);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case LAST_30_DAYS: {
         const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(newEndDate.getDate() - 30);
+        newStartDate.setDate(newEndDate.getDate() - 29);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -66,24 +66,22 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(1);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case LAST_MONTH: {
         const newEndDate = getNowDateWithoutTime();
         newEndDate.setDate(0);
-        console.log('newEndDate', newEndDate);
         const newStartDate = new Date(newEndDate.getTime());
         newStartDate.setDate(1);
-        console.log('newStartDate', newStartDate);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -93,9 +91,9 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(1);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -103,9 +101,9 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         const newStartDate = FIRST_VALID_DATE;
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: newStartDate,
+          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: newEndDate
+          endPeriod: getFirstMonthDay(newEndDate)
         });
         break;
       }
