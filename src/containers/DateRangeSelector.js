@@ -5,7 +5,7 @@ import {getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
 import {FIRST_VALID_DATE} from "../constants";
 
 export const DateRangeSelector = () => {
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const [isSelectorOpen, setIsSelectorOpen] = useState(true); //Todo: change default state
   const defaultStartDate = getNowDateWithoutTime();
   defaultStartDate.setDate(1);
   const [rangeState, setRangeState] = useState({

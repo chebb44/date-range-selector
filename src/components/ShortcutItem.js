@@ -1,11 +1,21 @@
 import React from 'react';
+import Button from "@material-ui/core/Button";
+import {makeStyles} from "@material-ui/core/styles";
 
 export const ShortcutItem = ({period, clickHandler}) => {
+  const styles = makeStyles({
+    button: {
+      fontSize: "small",
+    }
+  })
+  const classes = styles();
   return (
-    <span className="font-bold text-xs p-1 m-1 cursor-pointer"
+    <Button
+      size="small"
+      className={classes.button}
       onClick={() => clickHandler(period)}
     >
       {period}
-    </span>
+    </Button>
   );
 };

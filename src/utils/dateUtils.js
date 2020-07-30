@@ -15,6 +15,13 @@ export const createMonthArray = (period) => {
   return monthArray;
 }
 
+export const createTwoMonthArray = (period) => {
+  const rightSideDays = createMonthArray(period);
+  const prevPeriod = new Date(period.getFullYear(), period.getMonth() - 1);
+  const leftSideDays = createMonthArray(prevPeriod);
+  return {leftSideDays, rightSideDays}
+}
+
 export const getNowDateWithoutTime = () => {
   const date = new Date();
   date.setHours(0, 0, 0, 0,);

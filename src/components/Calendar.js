@@ -1,59 +1,33 @@
-import React, {useCallback} from 'react';
-import {createMonthArray} from "../utils/dateUtils";
+import React from 'react';
 import {CalendarCell} from "./CalendarCell";
-import {START_CALENDAR, weekDays} from "../constants";
-import {MonthSwitcher} from "./MonthSwitcher";
+import {weekDays} from "../constants";
+import Typography from "@material-ui/core/Typography";
 
 
-export const Calendar = ({rangeState: {startDate, endDate, startPeriod, endPeriod}, updateRangeState, type: calendarType}) => {
-  const currentPeriod = calendarType === START_CALENDAR ? startPeriod : endPeriod;
-  const activeDay = calendarType === START_CALENDAR ? startDate : endDate;
-
-  const monthDays = createMonthArray(currentPeriod);
-  const firstDayShift = monthDays[0].getDay();
+export const Calendar = ({days, clickHandler}) => {
+  const firstDayShift = days[0].getDay();
   const emptyCells = new Array(firstDayShift).fill('');
-  const changeDate = useCallback((newDate) => {
-    updateRangeState({[calendarType === START_CALENDAR ? 'startDate' : 'endDate']: newDate});
-  }, [calendarType, updateRangeState]);
-  const changePeriod = useCallback((newPeriod) => {
-    updateRangeState({[calendarType === START_CALENDAR ? 'startPeriod' : 'endPeriod']: newPeriod});
-  }, [calendarType, updateRangeState]);
-
-  return (
-    <div className="w-5/12 mt-4 p-4 h-full">
-      <div className="">
-        <MonthSwitcher
-          currentPeriod={currentPeriod}
-          changePeriod={changePeriod}
-          calendarType={calendarType}
+  return <div className="w-1/2 ml-2 mr-2 grid grid-cols-7 grid-rows-6 h-56">
+    {weekDays.map(day => {
+      return <div key={day} className="h-full w-full flex justify-center items-center">
+        <Typography>
+          {day}
+        </Typography>
+      </div>
+    })}
+    {
+      emptyCells.map((day, i) => {
+        return <div key={i}/>
+      })
+    }
+    {
+      days.map(day => {
+        return <CalendarCell
+          key={day.toString()}
+          date={day}
+          clickHandler={clickHandler}
         />
-      </div>
-      <div className="grid grid-cols-7 grid-rows-6">
-        {weekDays.map(day => {
-          return <CalendarCell
-            key={day}
-            text={day}/>
-        })}
-        {
-          emptyCells.map((day, i) => {
-            return <CalendarCell
-              key={i}/>
-          })
-        }
-        {
-          monthDays.map(day => {
-            return <CalendarCell
-              key={day.toString()}
-              date={day}
-              activeDay={activeDay}
-              clickHandler={changeDate}
-              calendarType={calendarType}
-              endDate={endDate}
-              startDate={startDate}
-            />
-          })
-        }
-      </div>
-    </div>
-  );
+      })
+    }
+  </div>;
 };
