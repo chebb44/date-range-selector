@@ -8,6 +8,7 @@ export const ShortcutItem = ({period, clickHandler}) => {
       fontSize: "small",
       '&:hover': {
         background: '#f6ad55',
+        color: '#FFF',
       }
     }
   });

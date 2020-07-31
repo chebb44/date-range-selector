@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
-import './OpenRangeSelector.css'
+import './FullRangeSelector.css'
 import {Calendar} from "./Calendar";
 import {Shortcuts} from "./Shortcuts";
 import {
-  changeMonth,
+  getNewDateWithChangeMonth,
   createTwoMonthArray,
   getFirstMonthDay,
   getNowDateWithoutTime,
@@ -20,27 +20,26 @@ import {
   SINGLE_SHIFT_STEP
 } from "../constants";
 
-export const OpenRangeSelector = (
-  {rangeState: {startDate, endDate, period, selectStart, hoverDate}, updateRangeState, toggleIsSelectorOpen}
+export const FullRangeSelector = (
+  {rangeState, updateRangeState, toggleIsSelectorOpen}
 ) => {
 
-  const {leftSideDays, rightSideDays} = createTwoMonthArray(period);
-  const leftPeriod = changeMonth(period, -1);
+  const {leftSideDays, rightSideDays} = createTwoMonthArray(rangeState.period);
+  const leftPeriod = getNewDateWithChangeMonth(rangeState.period, -1);
   const calendarClickHandler = useCallback((clickedDate) => {
-    if (selectStart) {
+    if (rangeState.selectStart) {
       updateRangeState({
         startDate: clickedDate,
         endDate: clickedDate,
         selectStart: false,
-      })
-      ;
+      });
     } else {
-      if (clickedDate.valueOf() < startDate.valueOf()) {
+      if (clickedDate.valueOf() < rangeState.startDate.valueOf()) {
         updateRangeState({
           startDate: clickedDate,
-          endDate: startDate,
+          endDate: rangeState.startDate,
           selectStart: true,
-        })
+        });
       } else {
         updateRangeState({
           endDate: clickedDate,
@@ -49,33 +48,33 @@ export const OpenRangeSelector = (
       }
       toggleIsSelectorOpen()
     }
-  }, [selectStart, startDate, toggleIsSelectorOpen, updateRangeState])
+  }, [rangeState, toggleIsSelectorOpen, updateRangeState])
 
   const monthSwitcherClickHandler = useCallback((clickType) => {
     switch (clickType) {
       case SHIFT_LEFT_CLICK: {
-        const newPeriod = changeMonth(period, -SINGLE_SHIFT_STEP);
+        const newPeriod = getNewDateWithChangeMonth(rangeState.period, -SINGLE_SHIFT_STEP);
         updateRangeState({
           period: newPeriod,
         });
         break;
       }
       case SHIFT_RIGHT_CLICK: {
-        const newPeriod = changeMonth(period, SINGLE_SHIFT_STEP);
+        const newPeriod = getNewDateWithChangeMonth(rangeState.period, SINGLE_SHIFT_STEP);
         updateRangeState({
           period: newPeriod,
         });
         break;
       }
       case SHIFT_DOUBLE_LEFT_CLICK: {
-        const newPeriod = changeMonth(period, -DOUBLE_SHIFT_STEP);
+        const newPeriod = getNewDateWithChangeMonth(rangeState.period, -DOUBLE_SHIFT_STEP);
         updateRangeState({
           period: newPeriod,
         });
         break;
       }
       case SHIFT_DOUBLE_RIGHT_CLICK: {
-        const newPeriod = changeMonth(period, DOUBLE_SHIFT_STEP);
+        const newPeriod = getNewDateWithChangeMonth(rangeState.period, DOUBLE_SHIFT_STEP);
         updateRangeState({
           period: newPeriod,
         });
@@ -84,46 +83,40 @@ export const OpenRangeSelector = (
       default:
         break;
     }
-  }, [period, updateRangeState]);
+  }, [rangeState, updateRangeState]);
 
-  const calendarHoverHandler = useCallback((date)=>{
+  const calendarHoverHandler = useCallback((date) => {
     updateRangeState({
       hoverDate: date,
     });
-  },[updateRangeState])
+  }, [updateRangeState])
 
-  const allowedArrows = {
-    rightShiftAllow: !isEqualMonthYear(period, getNowDateWithoutTime()),
-    doubleRightShiftAllow: period.valueOf() <
-      changeMonth(getFirstMonthDay(getNowDateWithoutTime()), -DOUBLE_SHIFT_STEP + 1).valueOf(),
+  const allowedMonthSwitcherArrows = {
+    rightShiftAllow: !isEqualMonthYear(rangeState.period, getNowDateWithoutTime()),
+    doubleRightShiftAllow: rangeState.period.valueOf() <
+      getNewDateWithChangeMonth(getFirstMonthDay(getNowDateWithoutTime()), -DOUBLE_SHIFT_STEP + 1).valueOf(),
     leftShiftAllow: !isEqualMonthYear(leftPeriod, FIRST_VALID_DATE),
     doubleLeftShiftAllow: leftPeriod.valueOf() >
-      changeMonth(getFirstMonthDay(FIRST_VALID_DATE), DOUBLE_SHIFT_STEP - 1).valueOf(),
+      getNewDateWithChangeMonth(getFirstMonthDay(FIRST_VALID_DATE), DOUBLE_SHIFT_STEP - 1).valueOf(),
   }
 
   return <div className="open-range-selector absolute shadow-custom bg-white rounded z-10 flex justify-between">
     <div className="w-10/12 p-4 pt-6">
       <MonthSwitcher
         leftPeriod={leftPeriod}
-        rightPeriod={period}
+        rightPeriod={rangeState.period}
         clickHandler={monthSwitcherClickHandler}
-        allowedArrows={allowedArrows}
+        allowedArrows={allowedMonthSwitcherArrows}
       />
       <div className=" flex justify-between items-start">
         <Calendar
-          startDate={startDate}
-          endDate={endDate}
-          hoverDate={hoverDate}
-          selectStart={selectStart}
+          rangeState={rangeState}
           days={leftSideDays}
           clickHandler={calendarClickHandler}
           hoverHandler={calendarHoverHandler}
         />
         <Calendar
-          startDate={startDate}
-          endDate={endDate}
-          hoverDate={hoverDate}
-          selectStart={selectStart}
+          rangeState={rangeState}
           days={rightSideDays}
           clickHandler={calendarClickHandler}
           hoverHandler={calendarHoverHandler}

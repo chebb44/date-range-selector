@@ -11,7 +11,7 @@ import {
   YESTERDAY
 } from "../constants";
 import {ShortcutItem} from "./ShortcutItem";
-import {changeDate, getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
+import {getNewDateWithChangeDay, getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
 
 export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
   const buttons = [
@@ -37,7 +37,7 @@ export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
         break;
       }
       case YESTERDAY: {
-        const newDate = changeDate(newEndDate, -1)
+        const newDate = getNewDateWithChangeDay(newEndDate, -1)
         updateRangeState({
           startDate: newDate,
           endDate: newDate,
@@ -46,7 +46,7 @@ export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
         break;
       }
       case LAST_7_DAYS: {
-        const newStartDate = changeDate(newEndDate, -6);
+        const newStartDate = getNewDateWithChangeDay(newEndDate, -6);
         updateRangeState({
           startDate: newStartDate,
           endDate: newEndDate,
@@ -55,7 +55,7 @@ export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
         break;
       }
       case LAST_30_DAYS: {
-        const newStartDate = changeDate(newEndDate, -29);
+        const newStartDate = getNewDateWithChangeDay(newEndDate, -29);
         updateRangeState({
           startDate: newStartDate,
           endDate: newEndDate,

@@ -56,16 +56,10 @@ export const getSiblingMonth = (date, direction) => {
   }
 }
 
-export const getShiftedOnMountDate = (date, shift) => {
-  const shiftedDate = new Date(date.getTime());
-  shiftedDate.setMonth(date.getMonth() + shift);
-  return shiftedDate;
-}
-
-export const changeMonth = (date, shift) => {
+export const getNewDateWithChangeMonth = (date, shift) => {
   return new Date(date.getFullYear(), date.getMonth() + shift, date.getDate());
 }
 
-export const changeDate = (date, shift) => {
+export const getNewDateWithChangeDay = (date, shift) => {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate() + shift);
 }

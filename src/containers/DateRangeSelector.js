@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import {CollapsedRangeSelector} from "../components/CollapsedRangeSelector";
-import {OpenRangeSelector} from "../components/OpenRangeSelector";
+import {FullRangeSelector} from "../components/FullRangeSelector";
 import {getFirstMonthDay, getNowDateWithoutTime, getSiblingMonth} from "../utils/dateUtils";
 import {FIRST_VALID_DATE} from "../constants";
 
@@ -61,7 +61,7 @@ export const DateRangeSelector = () => {
         rangeState={rangeState}
         arrowsClickHandler={shiftRangeHandler}
       />
-      {isSelectorOpen && <OpenRangeSelector
+      {isSelectorOpen && <FullRangeSelector
         rangeState={rangeState}
         updateRangeState={updateRangeState}
         toggleIsSelectorOpen={toggleIsSelectorOpen}

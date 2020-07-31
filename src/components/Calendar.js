@@ -1,26 +1,19 @@
 import React from 'react';
 import {CalendarCell} from "./CalendarCell";
-import {FIRST_VALID_DATE, weekDays} from "../constants";
-import Typography from "@material-ui/core/Typography";
+import {FIRST_VALID_DATE} from "../constants";
 import {getNowDateWithoutTime} from "../utils/dateUtils";
+import {CalendarHeader} from "./CalendarHeader";
+import {CalendarEmptyCells} from "./CalendarEmptyCells";
 
 
-export const Calendar = ({days, startDate, endDate, hoverDate, selectStart, clickHandler, hoverHandler}) => {
+export const Calendar = (
+  {
+    rangeState: {startDate, endDate, hoverDate, selectStart}, days, clickHandler, hoverHandler
+  }) => {
   const firstDayShift = days[0].getDay();
-  const emptyCells = new Array(firstDayShift).fill('');
   return <div className="w-1/2 ml-2 mr-2 grid grid-cols-7 grid-rows-6 gap-1">
-    {weekDays.map(day => {
-      return <div key={day} className="h-full w-full flex justify-center items-center">
-        <Typography>
-          {day}
-        </Typography>
-      </div>
-    })}
-    {
-      emptyCells.map((day, i) => {
-        return <div key={i}/>
-      })
-    }
+    <CalendarHeader/>
+    <CalendarEmptyCells cellsNumber={firstDayShift}/>
     {
       days.map((day) => {
         const isActive = day?.valueOf() === startDate?.valueOf() || day?.valueOf() === endDate?.valueOf();
