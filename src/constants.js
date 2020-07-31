@@ -9,13 +9,15 @@ export const LIFETIME = 'Lifetime';
 
 export const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-export const START_CALENDAR = 'START_CALENDAR';
-export const END_CALENDAR = 'END_CALENDAR';
-
 export const FIRST_VALID_DATE = new Date(2017, 3, 4);
 
-export const SINGLE_SHIFT = 1;
-export const DOUBLE_SHIFT = 3;
+export const SINGLE_SHIFT_STEP = 1;
+export const DOUBLE_SHIFT_STEP = 3;
 
-export const SHIFT_LEFT = 'SHIFT_LEFT';
-export const SHIFT_RIGHT = 'SHIFT_RIGHT';
+export const SHIFT_LEFT_CLICK = 'SHIFT_LEFT_CLICK';
+export const SHIFT_DOUBLE_LEFT_CLICK = 'SHIFT_DOUBLE_LEFT_CLICK';
+export const SHIFT_RIGHT_CLICK = 'SHIFT_RIGHT_CLICK';
+export const SHIFT_DOUBLE_RIGHT_CLICK = 'SHIFT_DOUBLE_RIGHT_CLICK';
+
+export const LEFT_SHIFT = 'LEFT_SHIFT';
+export const RIGHT_SHIFT = 'RIGHT_SHIFT';

@@ -1,4 +1,4 @@
-import {SHIFT_LEFT} from "../constants";
+import {LEFT_SHIFT} from "../constants";
 
 export const daysInMonth = (period) => {
   const year = period.getFullYear();
@@ -39,7 +39,7 @@ export const getFirstMonthDay = (date) => {
 }
 
 export const getSiblingMonth = (date, direction) => {
-  if (direction === SHIFT_LEFT) {
+  if (direction === LEFT_SHIFT) {
     const endDate = new Date(date.getTime());
     endDate.setDate(0);
     const startDate = new Date(endDate.getTime());
@@ -58,6 +58,14 @@ export const getSiblingMonth = (date, direction) => {
 
 export const getShiftedOnMountDate = (date, shift) => {
   const shiftedDate = new Date(date.getTime());
-  shiftedDate.setMonth(date.getMonth() +shift);
+  shiftedDate.setMonth(date.getMonth() + shift);
   return shiftedDate;
+}
+
+export const changeMonth = (date, shift) => {
+  return new Date(date.getFullYear(), date.getMonth() + shift, date.getDate());
+}
+
+export const changeDate = (date, shift) => {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + shift);
 }

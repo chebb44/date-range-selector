@@ -1,53 +1,70 @@
 import React, {useCallback, useState} from 'react';
 import {CollapsedRangeSelector} from "../components/CollapsedRangeSelector";
 import {OpenRangeSelector} from "../components/OpenRangeSelector";
-import {getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
+import {getFirstMonthDay, getNowDateWithoutTime, getSiblingMonth} from "../utils/dateUtils";
 import {FIRST_VALID_DATE} from "../constants";
 
 export const DateRangeSelector = () => {
-  const [isSelectorOpen, setIsSelectorOpen] = useState(true); //Todo: change default state
-  const defaultStartDate = getNowDateWithoutTime();
-  defaultStartDate.setDate(1);
+  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [rangeState, setRangeState] = useState({
-    startPeriod: defaultStartDate,
-    endPeriod: getNowDateWithoutTime(),
-    startDate: defaultStartDate,
+    period: getFirstMonthDay(getNowDateWithoutTime()),
+    startDate: getFirstMonthDay(getNowDateWithoutTime()),
     endDate: getNowDateWithoutTime(),
+    selectStart: true,
+    hoverDate: null,
   });
 
   const validateRangeState = (state) => {
     const today = getNowDateWithoutTime();
-    return state.startDate.valueOf() >= FIRST_VALID_DATE.valueOf() &&
-      state.startPeriod.valueOf() >= getFirstMonthDay(FIRST_VALID_DATE).valueOf() &&
-      state.endPeriod.valueOf() >= FIRST_VALID_DATE.valueOf() &&
-      state.endDate.valueOf() >= FIRST_VALID_DATE.valueOf() &&
-      state.startPeriod.valueOf() <= today.valueOf() &&
-      state.endPeriod.valueOf() <= today.valueOf() &&
-      state.startDate.valueOf() <= today.valueOf() &&
-      state.endDate.valueOf() <= today.valueOf() &&
-      state.startDate.valueOf() <= state.endDate.valueOf();
+
+    const isStartDateValid = state.startDate ?
+      state.startDate?.valueOf() >= FIRST_VALID_DATE.valueOf() &&
+      state.startDate?.valueOf() <= today.valueOf() : true;
+
+    const isEndDateValid = state.endDate ?
+      state.endDate?.valueOf() >= FIRST_VALID_DATE.valueOf() &&
+      state.endDate?.valueOf() <= today.valueOf() &&
+      state.endDate?.valueOf() >= state.startDate.valueOf() : true;
+
+    const isPeriodValid = state.period.valueOf() <= getFirstMonthDay(today).valueOf() &&
+      state.period.valueOf() >= getFirstMonthDay(FIRST_VALID_DATE).valueOf();
+
+    return (isStartDateValid && isEndDateValid && isPeriodValid);
   }
 
-  const updateRangeState = useCallback((data) => {
-    const newRangeState = {...rangeState, ...data};
+  const updateRangeState = useCallback((newData) => {
+    const newRangeState = {...rangeState, ...newData};
     if (validateRangeState(newRangeState)) {
-      setRangeState({...rangeState, ...data});
+      setRangeState(newRangeState);
     }
   }, [rangeState]);
 
   const toggleIsSelectorOpen = useCallback(() => {
     setIsSelectorOpen(!isSelectorOpen);
   }, [isSelectorOpen])
+
+  const shiftRangeHandler = useCallback((direction) => {
+    let {startDate: newStartDate, endDate: newEndDate} = getSiblingMonth(rangeState.endDate, direction);
+    if (newEndDate.valueOf() > getNowDateWithoutTime().valueOf()) newEndDate = getNowDateWithoutTime();
+    if (newStartDate.valueOf() < FIRST_VALID_DATE.valueOf()) newStartDate = FIRST_VALID_DATE;
+    updateRangeState({
+      startDate: newStartDate,
+      endDate: newEndDate,
+      period: getFirstMonthDay(newEndDate),
+    });
+  }, [rangeState.endDate, updateRangeState])
+
   return (
     <div className="date-range-selector">
       <CollapsedRangeSelector
         toggleIsSelectorOpen={toggleIsSelectorOpen}
         rangeState={rangeState}
-        updateRangeState={updateRangeState}
+        arrowsClickHandler={shiftRangeHandler}
       />
       {isSelectorOpen && <OpenRangeSelector
         rangeState={rangeState}
         updateRangeState={updateRangeState}
+        toggleIsSelectorOpen={toggleIsSelectorOpen}
       />}
     </div>
   );

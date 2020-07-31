@@ -11,10 +11,19 @@ import {
   YESTERDAY
 } from "../constants";
 import {ShortcutItem} from "./ShortcutItem";
-import {getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
+import {changeDate, getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
 
-export const Shortcuts = ({rangeState, updateRangeState}) => {
-  const buttons = [TODAY, YESTERDAY, LAST_7_DAYS, LAST_30_DAYS, THIS_MONTH, LAST_MONTH, THIS_YEAR, LIFETIME];
+export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
+  const buttons = [
+    TODAY,
+    YESTERDAY,
+    LAST_7_DAYS,
+    LAST_30_DAYS,
+    THIS_MONTH,
+    LAST_MONTH,
+    THIS_YEAR,
+    LIFETIME
+  ];
 
   const periodButtonClickHandler = useCallback((period) => {
     const newEndDate = getNowDateWithoutTime();
@@ -22,53 +31,44 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
       case TODAY: {
         updateRangeState({
           startDate: newEndDate,
-          startPeriod: newEndDate,
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case YESTERDAY: {
-        const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(newEndDate.getDate() - 1);
+        const newDate = changeDate(newEndDate, -1)
         updateRangeState({
-          startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
-          endDate: newStartDate,
-          endPeriod: getFirstMonthDay(newStartDate)
+          startDate: newDate,
+          endDate: newDate,
+          period: getFirstMonthDay(newDate)
         });
         break;
       }
       case LAST_7_DAYS: {
-        const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(newEndDate.getDate() - 6);
+        const newStartDate = changeDate(newEndDate, -6);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case LAST_30_DAYS: {
-        const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(newEndDate.getDate() - 29);
+        const newStartDate = changeDate(newEndDate, -29);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case THIS_MONTH: {
-        const newStartDate = new Date(newEndDate.getTime());
-        newStartDate.setDate(1);
+        const newStartDate = getFirstMonthDay(newEndDate);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -79,9 +79,8 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(1);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
@@ -91,26 +90,24 @@ export const Shortcuts = ({rangeState, updateRangeState}) => {
         newStartDate.setDate(1);
         updateRangeState({
           startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
       case LIFETIME: {
-        const newStartDate = FIRST_VALID_DATE;
         updateRangeState({
-          startDate: newStartDate,
-          startPeriod: getFirstMonthDay(newStartDate),
+          startDate: FIRST_VALID_DATE,
           endDate: newEndDate,
-          endPeriod: getFirstMonthDay(newEndDate)
+          period: getFirstMonthDay(newEndDate)
         });
         break;
       }
       default:
         break;
     }
-  }, [updateRangeState]);
+    toggleIsSelectorOpen();
+  }, [toggleIsSelectorOpen, updateRangeState]);
   return (
     <div className="w-1/5 flex flex-grow-0 flex-col justify-between items-start pl-6 pt-2 pb-2 border-l h-full">
       {
