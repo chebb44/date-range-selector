@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import {Grid} from '@material-ui/core'
 import {
   FIRST_VALID_DATE,
   LAST_30_DAYS,
@@ -11,7 +12,7 @@ import {
   YESTERDAY
 } from "../constants";
 import {ShortcutItem} from "./ShortcutItem";
-import {getNewDateWithChangeDay, getFirstMonthDay, getNowDateWithoutTime} from "../utils/dateUtils";
+import {getFirstMonthDay, getNewDateWithChangeDay, getNowDateWithoutTime} from "../utils/dateUtils";
 
 export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
   const buttons = [
@@ -109,7 +110,9 @@ export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
     toggleIsSelectorOpen();
   }, [toggleIsSelectorOpen, updateRangeState]);
   return (
-    <div className="w-1/5 flex flex-grow-0 flex-col justify-between items-start pl-6 pt-2 pb-2 border-l h-full">
+    <Grid container direction="column" justify="space-between" alignItems="flex-start"
+          className="pl-8 pt-2 pb-2 border-l"
+      >
       {
         buttons.map(period => {
           return <ShortcutItem
@@ -119,6 +122,6 @@ export const Shortcuts = ({updateRangeState, toggleIsSelectorOpen}) => {
           />
         })
       }
-    </div>
+    </Grid>
   );
 };

@@ -6,6 +6,7 @@ export const ShortcutItem = ({period, clickHandler}) => {
   const styles = makeStyles({
     button: {
       fontSize: "small",
+      textTransform: "none",
       '&:hover': {
         background: '#f6ad55',
         color: '#FFF',

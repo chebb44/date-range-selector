@@ -1,11 +1,12 @@
 import React, {useCallback} from 'react';
-import './FullRangeSelector.css'
+import './FullRangeSelector.css';
+import {Grid} from '@material-ui/core'
 import {Calendar} from "./Calendar";
 import {Shortcuts} from "./Shortcuts";
 import {
-  getNewDateWithChangeMonth,
   createTwoMonthArray,
   getFirstMonthDay,
+  getNewDateWithChangeMonth,
   getNowDateWithoutTime,
   isEqualMonthYear
 } from "../utils/dateUtils";
@@ -100,33 +101,37 @@ export const FullRangeSelector = (
       getNewDateWithChangeMonth(getFirstMonthDay(FIRST_VALID_DATE), DOUBLE_SHIFT_STEP - 1).valueOf(),
   }
 
-  return <div className="open-range-selector absolute shadow-custom bg-white rounded z-10 flex justify-between">
-    <div className="w-10/12 p-4 pt-6">
-      <MonthSwitcher
-        leftPeriod={leftPeriod}
-        rightPeriod={rangeState.period}
-        clickHandler={monthSwitcherClickHandler}
-        allowedArrows={allowedMonthSwitcherArrows}
-      />
-      <div className=" flex justify-between items-start">
-        <Calendar
-          rangeState={rangeState}
-          days={leftSideDays}
-          clickHandler={calendarClickHandler}
-          hoverHandler={calendarHoverHandler}
+  return <div className="open-range-selector absolute shadow-custom bg-white rounded z-10">
+    <Grid container className="h-full">
+      <Grid item xs={9} className="p-4 pt-6">
+        <MonthSwitcher
+          leftPeriod={leftPeriod}
+          rightPeriod={rangeState.period}
+          clickHandler={monthSwitcherClickHandler}
+          allowedArrows={allowedMonthSwitcherArrows}
         />
-        <Calendar
-          rangeState={rangeState}
-          days={rightSideDays}
-          clickHandler={calendarClickHandler}
-          hoverHandler={calendarHoverHandler}
+        <div className=" flex justify-between items-start">
+          <Calendar
+            rangeState={rangeState}
+            days={leftSideDays}
+            clickHandler={calendarClickHandler}
+            hoverHandler={calendarHoverHandler}
+          />
+          <Calendar
+            rangeState={rangeState}
+            days={rightSideDays}
+            clickHandler={calendarClickHandler}
+            hoverHandler={calendarHoverHandler}
+          />
+        </div>
+      </Grid>
+      <Grid container item xs={3}>
+        <Shortcuts
+          updateRangeState={updateRangeState}
+          toggleIsSelectorOpen={toggleIsSelectorOpen}
         />
-      </div>
-    </div>
-    <Shortcuts
-      updateRangeState={updateRangeState}
-      toggleIsSelectorOpen={toggleIsSelectorOpen}
-    />
+      </Grid>
+    </Grid>
   </div>;
 };
 
