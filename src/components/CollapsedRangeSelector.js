@@ -14,7 +14,10 @@ export const CollapsedRangeSelector = (
   return (
     <div className="border-blue-400">
       <span className="cursor-pointer" onClick={toggleIsSelectorOpen}>
-        <i className="fa fa-calendar text-gray-700" aria-hidden="true"/>
+        <i
+          className="fa fa-calendar text-gray-700 p-1 cursor-pointer rounded hover:bg-orange-400 transition-all duration-200"
+          aria-hidden="true"
+        />
         {
           isToday ? (
             <span className="text-xs font-bold p-2"> {`Today, ${endDate.toLocaleDateString('en-US', {
@@ -36,10 +39,14 @@ export const CollapsedRangeSelector = (
         }
       </span>
       <span>
-          <img className="inline p-2 cursor-pointer hover:bg-blue-300" src={arrowLeft} alt="left"
-               onClick={() => arrowsClickHandler(LEFT_SHIFT)}/>
-          <img className="inline p-2 cursor-pointer hover:scale-110" src={arrowRight} alt="right"
-               onClick={() => arrowsClickHandler(RIGHT_SHIFT)}/>
+          <img
+            className="inline p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+            src={arrowLeft} alt="left"
+            onClick={() => arrowsClickHandler(LEFT_SHIFT)}/>
+          <img
+            className="inline p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+            src={arrowRight} alt="right"
+            onClick={() => arrowsClickHandler(RIGHT_SHIFT)}/>
       </span>
     </div>
   );

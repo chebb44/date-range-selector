@@ -14,7 +14,7 @@ export const CalendarCell = (
   }
 ) => {
   const cellClasses = classNames(
-    "h-8 w-full cursor-pointer flex justify-center items-center",
+    "h-8 w-full cursor-pointer flex justify-center items-center hover:shadow",
     {"bg-orange-500 text-white": isActive},
     {"text-gray-500": isDisabled},
     {"bg-orange-300": isSelected},

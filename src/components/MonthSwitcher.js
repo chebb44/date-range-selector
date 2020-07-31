@@ -21,13 +21,19 @@ export const MonthSwitcher = (
     <div className="flex justify-between">
       <div className="flex w-1/2 items-center justify-between pl-4 pr-4">
         <div className="w-12 flex justify-between items-center">
-          <div className="w-4 h-4">
-            {leftShiftAllow && <img className="cursor-pointer" src={arrowLeft} alt="left"
-                                    onClick={() => clickHandler(SHIFT_LEFT_CLICK)}/>}
+          <div className="w-6 h-6">
+            {leftShiftAllow &&
+            <img
+              className="h-full w-full p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+              src={arrowLeft} alt="left"
+              onClick={() => clickHandler(SHIFT_LEFT_CLICK)}/>}
           </div>
-          <div className="w-4 h-4">
-            {doubleLeftShiftAllow && <img className="cursor-pointer" src={doubleArrowLeft} alt="double-left"
-                                          onClick={() => clickHandler(SHIFT_DOUBLE_LEFT_CLICK)}/>}
+          <div className="w-6 h-6">
+            {doubleLeftShiftAllow &&
+            <img
+              className="h-full w-full p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+              src={doubleArrowLeft} alt="double-left"
+              onClick={() => clickHandler(SHIFT_DOUBLE_LEFT_CLICK)}/>}
           </div>
         </div>
         <p className="font-bold text-sm">
@@ -41,13 +47,20 @@ export const MonthSwitcher = (
           {rightPeriod.toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}
         </p>
         <div className="w-12 flex justify-between items-center">
-          <div className="w-4 h-4">
-            {doubleRightShiftAllow && <img className="cursor-pointer" src={doubleArrowRight} alt="double-right"
-                                           onClick={() => clickHandler(SHIFT_DOUBLE_RIGHT_CLICK)}/>}
+          <div className="w-6 h-6">
+            {doubleRightShiftAllow &&
+            <img
+              className="h-full w-full p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+              src={doubleArrowRight} alt="double-right"
+              onClick={() => clickHandler(SHIFT_DOUBLE_RIGHT_CLICK)}/>}
           </div>
-          <div className="w-4 h-4">
-            {rightShiftAllow && <img className="cursor-pointer" src={arrowRight} alt="right"
-                                     onClick={() => clickHandler(SHIFT_RIGHT_CLICK)}/>}
+          <div className="w-6 h-6">
+            {rightShiftAllow &&
+            <img
+              className="h-full w-full p-1 cursor-pointer rounded-full hover:bg-orange-400 transition-all duration-200"
+              src={arrowRight} alt="right"
+              onClick={() => clickHandler(SHIFT_RIGHT_CLICK)}
+            />}
           </div>
         </div>
       </div>
