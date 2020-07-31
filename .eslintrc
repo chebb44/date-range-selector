@@ -1,0 +1,13 @@
+{
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "globals": {
+    "chrome": "readonly"
+  },
+  "rules": {
+    "react/prop-types": "off"
+  }
+}
